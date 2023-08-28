@@ -2,7 +2,7 @@
 
     session_start();
     
-    if(!isset($_SESSION['admNames'])){
+    if(!isset($_SESSION['stunNames'])){
         echo'
             <script>
                 alert("Por favor debes iniciar sesión");
@@ -14,6 +14,7 @@
     }
   
 ?>
+
 <!DOCTYPE php>
 <php lang="es">
 <head>
@@ -53,7 +54,7 @@
     <div>
         <nav class="navbar bg-body-tertiary">
             <div class="container">
-                <h1>Alumnos</h1>
+                <h1>Alumno</h1>
             <a class="navbar-brand">
                 <img src="images/tescha1.jpg" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
@@ -61,7 +62,7 @@
                 <img src="images/informatica.png" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
             <a class="navbar-brand">
-                <a><?php echo'Bienvenido '.$_SESSION['admNames'];?></a>
+                <a><?php echo'Bienvenido '.$_SESSION['stunNames'];?></a>
             </a>
             <a class="navbar-brand">
                 <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">CERRAR SESIÓN</a></li>
@@ -72,10 +73,7 @@
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="altadmin.php">ADMINISTRADOR</a></li>
-                <li class="breadcrumb-item"><a href="altas.php">DOCENTES</a></li>
-                <li class="breadcrumb-item active" aria-current="page">ALUMNOS</a></li>
-               
+                <li class="breadcrumb-item active" aria-current="page">ALUMNO</a></li>
             </ol>
           </nav>
     </div>
@@ -91,15 +89,7 @@
                     <!-- Table with stripped rows -->
                     <table id="example" class="table table-success border-dark table-striped" style="width:100%">
                         <thead>
-                             <div class="center"> 
-                                <a href="agregalum.php">
-                                    <button type="button" class="btn btn-success" type="submit" name="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                                    </svg>Agregar Alumno</button></a>
-                            </div>
-                        <tr>
+                            <tr>
                                 <th>Matricula</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
@@ -113,25 +103,25 @@
                                 <th>Usuario</th>
                                 <th>Contraseña</th>
                                 <th>Docente</th>
-                                <th>Actividad</th>
+                                <th>Tipo de Actividad</th>
                                 <th>Actividad Complementaria</th>
                                 <th>Periodo</th>
-                                <th>Acción</th>
-                            <!-- </tr> -->
+                            </tr>
                         </thead>
                         <tbody>
                             <?php
-                                include ("php/conexion.php"); 
-                                
-                                $sql = "SELECT s.matristu, MAX(s.stunNames) AS stunNames, MAX(s.stuLastNames) AS stuLastNames, MAX(s.stuSex) AS stuSex, MAX(s.stuPhone) AS stuPhone, MAX(s.stuCare) AS stuCare, MAX(s.stuSeme) AS stuSeme, MAX(s.stuTurn) AS stuTurn, MAX(s.stuGroup) AS stuGroup, MAX(s.stuMail) AS stuMail, MAX(s.stuUser) AS stuUser, MAX(s.stuClav) AS stuClav, MAX(t.teachNames) AS teachNames, MAX(a.actNombre) AS actNombre, MAX(p.perPeriodo) AS perPeriodo, MAX(c.carreNombre) AS carreNombre 
+                                include ("php/conexion.php");
+
+                                $sql = "SELECT s.matristu,s.stunNames,s.stuLastNames,s.stuSex,s.stuPhone,s.stuCare,s.stuSeme,s.stuTurn,s.stuGroup,s.stuMail,s.stuUser,s.stuClav,t.teachNames,a.actNombre,p.perPeriodo,c.carreNombre 
                                 FROM students s
                                 INNER JOIN teachers t 
                                 INNER JOIN actividad a ON a.teachers_matritea = t.matritea   
                                 INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
                                 INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
-                                GROUP BY s.matristu";
+                                WHERE s.stunNames = ?";
 
                                 $stmt = mysqli_prepare($conexion, $sql);
+                                mysqli_stmt_bind_param($stmt, "s", $_SESSION['stunNames']);
                                 mysqli_stmt_execute($stmt);
                                 
                                 $result = mysqli_stmt_get_result($stmt);
@@ -155,13 +145,6 @@
                             <td><?php echo htmlentities($row['carreNombre']) ?></td>
                             <td><?php echo htmlentities($row['actNombre']) ?></td>
                             <td><?php echo htmlentities($row['perPeriodo']) ?></td>
-                                <td>
-                                    <a href="editalum.php?matristu=<?php echo $row['matristu']?>">
-                                    <button type="button" class="btn btn-primary" type="submit" name="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                    </svg>Editar datos</button></a>
-                                </td>
                             </tr>
                             <?php
                                 }

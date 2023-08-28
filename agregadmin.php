@@ -1,12 +1,12 @@
 <!DOCTYPE php>
-<php lang="en">
+<php lang="es">
 <head>
     <title>Editar</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">      
         
 <!--===============================================================================================-->	
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-PJsj/BTMqILvmcej7ulplguok8ag4xFTPryRq8xevL7eBYSmpXKcbNVuy+P0RMgq" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-PJsj/BTMqILvmcej7ulplguok8ag4xFTPryRq8xevL7eBYSmpXKcbNVuy+P0RMgq" crossorigin="anonymous"> 
 <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -52,7 +52,7 @@
 					<select class="form-select" aria-label="Default select example" name="admSex">
                                 <option value="M">M</option>
                                 <option value="F">F</option>  
-                        </select>
+                    </select>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
@@ -78,8 +78,8 @@
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "STATE">
-						<select class="form-select" aria-label="Default select example" name="admState">
+					<div class="wrap-input100 validate-input" data-validate = "STATE">Estado
+						<select class="form-select form-select-sm" aria-label="Small select example" name="admState">
                             <option value="Soltero">Soltero(a)</option>
                             <option value="Casado">Casado(a)</option>
                             <option value="Divorciado">Divorciado(a)</option>

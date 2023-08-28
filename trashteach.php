@@ -1,12 +1,12 @@
 <!DOCTYPE php>
-<php lang="en">
+<php lang="es">
 <head>
     <title>Editar</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">      
         
 <!--===============================================================================================-->	
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-PJsj/BTMqILvmcej7ulplguok8ag4xFTPryRq8xevL7eBYSmpXKcbNVuy+P0RMgq" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-PJsj/BTMqILvmcej7ulplguok8ag4xFTPryRq8xevL7eBYSmpXKcbNVuy+P0RMgq" crossorigin="anonymous">  
 <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -85,10 +85,6 @@
 						<span data-placeholder="Clue"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "STATE">Estado
-						<input class="input100" type="text" name="teachState" disabled value="<?php echo $row['teachState']; ?>">
-						<span data-placeholder="State"></span>
-					</div>
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>

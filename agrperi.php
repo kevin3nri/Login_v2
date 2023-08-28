@@ -34,70 +34,34 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/eliminar.php" method="POST">
+				<form action="php/docente/agrperi.php" method="POST">
 					<span class="login100-form-title p-b-26">
-						Eliminar
+						Agregar Periodo
 					</span>
-                        <?php
-                            include ("php/conexion.php");
 
-                            $idadmin= $_GET['idadmin'];
-                            $sql = "SELECT * FROM admins WHERE idadmin ='$idadmin'";
-                            $result = $conexion->query($sql);
-                            $row = $result->fetch_assoc();
-                            $conexion->close();  
-                        ?>
-
-                    <div class=" validate-input" data-validate = "Id">
-						<input class="input100" type="hidden" name="idadmin" value="<?php echo $row['idadmin']; ?>">
+                    <div class="validate-input" data-validate = "idPeriodo">
+						<input class="input100" type="hidden" name="idPeriodo" >
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">Nombre
-						<input class="input100" type="text" name="admNames" disabled value="<?php echo $row['admNames']; ?>">
-						<span data-placeholder="Names"></span>
+					<div class="wrap-input100 validate-input" data-validate = "Periodo">
+						<input class="input100" type="text" name="perPeriodo" >
+						<span class="focus-input100" data-placeholder="Periodo"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "GENERO">GENERO
-						<input class="input100" type="text" name="admSex" disabled value="<?php echo $row['admSex']; ?>">
-						<span data-placeholder="Sex"></span>
+                    
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit" name="submit">
+								Guardar
+							</button>
+						</div>
 					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">Correo
-						<input class="input100" type="text" name="admMail" disabled value="<?php echo $row['admMail']; ?>">
-						<span data-placeholder="Email"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "PHONE">Telefono
-						<input class="input100" type="phone" name="admPhone" disabled value="<?php echo $row['admPhone']; ?>">
-						<span data-placeholder="Phone"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "USER">Usuario
-						<input class="input100" type="text" name="admUser" disabled value="<?php echo $row['admUser']; ?>">
-						<span data-placeholder="User"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">Password
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
-						<input class="input100" type="password" name="admClue" disabled value="<?php echo $row['admClue']; ?>">
-						<span data-placeholder="Clue"></span>
-					</div>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" type="submit" name="submit">
-                                Eliminar
-                            </button>
-                        </div>
-				    </div>
 				</form>
-                <div class="container-login100-form-btn">
+				<div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <a href="altadmin.php">
+                        <a href="docente.php">
                         <button class="login100-form-btn">
                             Regresar
                         </button></a>
@@ -107,7 +71,6 @@
 		</div>
 	</div>
 	
-
 	<div id="dropDownSelect1"></div>
   
     </main>

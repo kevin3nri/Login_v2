@@ -1,5 +1,5 @@
 <!DOCTYPE php>
-<php lang="en">
+<php lang="es">
 <head>
     <title>Editar</title>
     <meta charset="UTF-8">

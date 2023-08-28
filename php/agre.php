@@ -12,7 +12,7 @@
     $ciudad = $_POST['teachState'];
     
 
-    $sql1 = "INSERT INTO teachers (matritea, teachNames, teachSex, teachMail, teachPhone, teachUser, teachClue, teachRol, teachState, teachFere)
+    $sql = "INSERT INTO teachers (matritea, teachNames, teachSex, teachMail, teachPhone, teachUser, teachClue, teachRol, teachState, teachFere)
      VALUES ('$matritea', '$names', '$genero', '$email', '$phone', '$user', '$contrasena', 2 ,'$ciudad', '$fechahora')";
     
     // verificar que el correo no se repita en la base de datos
@@ -41,7 +41,7 @@
         exit();
     }
 
-    $dato = mysqli_query($conexion, $sql1);
+    $dato = mysqli_query($conexion, $sql);
 
     if($dato){
         echo '
@@ -57,7 +57,16 @@
             window.location = "../altas.php";
         </script>
     ';
-
     }
 
+
+
+    $sql2 ="INSERT INTO actividad (idActividad, Nombre_Act, Periodo_idPeriodo, carrera_idcarrera)
+    VALUES ('$idac','$acti','$idp','$idca')";
+     
+    $sql3 ="INSERT INTO periodo (idPeriodo, Periodo)
+    VALUES ('$idp', '$period')";
+
+    $sql4 ="INSERT INTO carrera (idcarrera, Nombre)
+    VALUES ('$idca','$carre')";
 ?>

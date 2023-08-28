@@ -1,5 +1,5 @@
 <!DOCTYPE php>
-<php lang="en">
+<php lang="es">
 <head>
     <title>Editar</title>
     <meta charset="UTF-8">
@@ -85,15 +85,6 @@
 						</span>
 						<input class="input100" type="password" name="admClue" value="<?php echo $row['admClue']; ?>">
 						<span class="focus-input100" data-placeholder="Password"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "STATE">ESTADO
-                        <select class="form-select" aria-label="Default select example" name="admState" value="<?php echo $row['admState']; ?>">
-                            <option value="Soltero">Soltero(a)</option>
-                            <option value="Casado">Casado(a)</option>
-                            <option value="Divorciado">Divorciado(a)</option>
-                            <option value="Viudo">Viudo(a)</option>
-                        </select>
 					</div>
 
 					<div class="container-login100-form-btn">

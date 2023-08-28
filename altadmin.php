@@ -1,5 +1,21 @@
+<?php
+
+    session_start();
+    
+    if(!isset($_SESSION['admNames'])){
+        echo'
+            <script>
+                alert("Por favor debes iniciar sesión");
+                window.location = "index.php";
+            </script>
+        ';
+        session_destroy();
+        die();
+    }
+  
+?>
 <!DOCTYPE php>
-<php lang="en">
+<php lang="es">
 <head>
     <title>Login</title>
     <meta charset="UTF-8">
@@ -44,7 +60,12 @@
             <a class="navbar-brand">
                 <img src="images/informatica.png" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
-            <li class="breadcrumb-item active" aria-current="page"><a href="php/cerra_sesion.php">CERRAR SESIÓN</a></li>
+            <a class="navbar-brand">
+                <a><?php echo'Bienvenido '.$_SESSION['admNames'];?></a>
+            </a>
+            <a class="navbar-brand">
+                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">CERRAR SESIÓN</a></li>
+            </a>
             </div>
         </nav>
     </div>
@@ -76,7 +97,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
                                     <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                     <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                                </svg>Agregar</button></a>
+                                </svg>Agregar Admin</button></a>
                         </div>
                             <tr>
                                 <th>Id</th>
@@ -86,7 +107,6 @@
                                 <th>Telefono</th>
                                 <th>Usuario</th>
                                 <th>Contraseña</th>
-                                <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -95,21 +115,21 @@
 
                                 include ("php/conexion.php");
 
-                                $sql = "SELECT * FROM admins";
-                                $result = mysqli_query($conexion,$sql);
+                                $stmt = mysqli_prepare($conexion, "SELECT * FROM admins");
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
 
                                 while($row = mysqli_fetch_array($result)){
 
                             ?>
                             <tr>
-                                <td><?php echo $row['idadmin'] ?></td>
-                                <td><?php echo $row['admNames'] ?></td>
-                                <td><?php echo $row['admSex'] ?></td>
-                                <td><?php echo $row['admMail'] ?></td>
-                                <td><?php echo $row['admPhone'] ?></td>
-                                <td><?php echo $row['admUser'] ?></td>
-                                <td><?php echo $row['admClue'] ?></td>
-                                <td><?php echo $row['admState'] ?></td>
+                            <td><?php echo htmlentities($row['idadmin']); ?></td>
+                            <td><?php echo htmlentities($row['admNames']); ?></td>
+                            <td><?php echo htmlentities($row['admSex']); ?></td>
+                            <td><?php echo htmlentities($row['admMail']); ?></td>
+                            <td><?php echo htmlentities($row['admPhone']); ?></td>
+                            <td><?php echo htmlentities($row['admUser']); ?></td>
+                            <td><?php echo htmlentities($row['admClue']); ?></td>
 
                                 <td>
                                     <a href="edit.php?idadmin=<?php echo $row['idadmin']?>">
