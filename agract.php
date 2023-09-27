@@ -64,14 +64,14 @@
                     </div>
 
                     <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Actividad complementaria</label>
+					<label form="select" class="form-label" >Tipo de Actividad</label>
                         <?php
                         include 'php/conexion.php';
                         $query = "SELECT * FROM carrera";
                         $result = $conexion->query($query);
                         ?>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="carrera">
-                            <option selected>Seleccione la actividad complementaria</option>
+                            <option selected>Seleccione el tipo de actividad</option>
                             <?php while ( $row = $result->fetch_assoc() ) { ?>
                                 <option value="<?php echo $row["idcarrera"]; ?> " ><?php echo $row["carreNombre"];?></option> 
                             <?php } ?>
@@ -123,7 +123,7 @@
                         <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
                     </div>
                     <center>
-                        <p>kevin enrique, Monse Cabadilla @ 2023 | TESCHA-Ingeniería Informática</p>
+                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
                     </center>
                 </div>
             </div>

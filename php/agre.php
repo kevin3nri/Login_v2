@@ -59,14 +59,4 @@
     ';
     }
 
-
-
-    $sql2 ="INSERT INTO actividad (idActividad, Nombre_Act, Periodo_idPeriodo, carrera_idcarrera)
-    VALUES ('$idac','$acti','$idp','$idca')";
-     
-    $sql3 ="INSERT INTO periodo (idPeriodo, Periodo)
-    VALUES ('$idp', '$period')";
-
-    $sql4 ="INSERT INTO carrera (idcarrera, Nombre)
-    VALUES ('$idca','$carre')";
 ?>

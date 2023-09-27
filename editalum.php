@@ -209,7 +209,7 @@
                         <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
                     </div>
                     <center>
-                        <p>kevin enrique, Monse Cabadilla @ 2023 | TESCHA-Ingeniería Informática</p>
+                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
                     </center>
                 </div>
             </div>

@@ -60,22 +60,37 @@
             <a class="navbar-brand">
                 <img src="images/informatica.png" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
+            <style>
+                .bold-text {
+                    font-weight: bold;
+                }
+            </style>
             <a class="navbar-brand">
-                <a><?php echo'Bienvenido '.$_SESSION['admNames'];?></a>
+                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['admNames'];?></a>
             </a>
             <a class="navbar-brand">
-                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">CERRAR SESIÓN</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">Cerrar Sesión</a></li>
             </a>
             </div>
         </nav>
     </div>
     <div>
-        <nav aria-label="breadcrumb">
+    <nav class="navbar navbar-expand-lg" aria-label="breadcrumb">
+    <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="altadmin.php">Administradores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="altas.php">Docentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="altasalumnos.php">Alumnos</a>
+                    </li>
+                </ul>
+            </div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="altadmin.php">ADMINISTRADOR</a></li>
-                <li class="breadcrumb-item"><a href="altas.php">DOCENTES</a></li>
-                <li class="breadcrumb-item active" aria-current="page">ALUMNOS</a></li>
-               
+                <li class="breadcrumb-item active" aria-current="page"><strong>ALUMNOS</strong></a></li>
             </ol>
           </nav>
     </div>
@@ -99,7 +114,7 @@
                                         <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                                     </svg>Agregar Alumno</button></a>
                             </div>
-                        <tr>
+                            <tr>
                                 <th>Matricula</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
@@ -113,23 +128,24 @@
                                 <th>Usuario</th>
                                 <th>Contraseña</th>
                                 <th>Docente</th>
-                                <th>Actividad</th>
-                                <th>Actividad Complementaria</th>
+                                <th>Nombre de la Actividad</th>
+                                <th>Tipo de Actividad</th>
                                 <th>Periodo</th>
                                 <th>Acción</th>
+                            </tr>
                             <!-- </tr> -->
                         </thead>
                         <tbody>
                             <?php
                                 include ("php/conexion.php"); 
                                 
-                                $sql = "SELECT s.matristu, MAX(s.stunNames) AS stunNames, MAX(s.stuLastNames) AS stuLastNames, MAX(s.stuSex) AS stuSex, MAX(s.stuPhone) AS stuPhone, MAX(s.stuCare) AS stuCare, MAX(s.stuSeme) AS stuSeme, MAX(s.stuTurn) AS stuTurn, MAX(s.stuGroup) AS stuGroup, MAX(s.stuMail) AS stuMail, MAX(s.stuUser) AS stuUser, MAX(s.stuClav) AS stuClav, MAX(t.teachNames) AS teachNames, MAX(a.actNombre) AS actNombre, MAX(p.perPeriodo) AS perPeriodo, MAX(c.carreNombre) AS carreNombre 
-                                FROM students s
-                                INNER JOIN teachers t 
-                                INNER JOIN actividad a ON a.teachers_matritea = t.matritea   
+                                $sql = "SELECT s.matristu, s.stunNames, s.stuLastNames, s.stuSex, s.stuPhone, s.stuCare, s.stuSeme, s.stuTurn, s.stuGroup, s.stuMail, s.stuUser, s.stuClav, t.teachNames, a.actNombre, p.perPeriodo, c.carreNombre 
+                                FROM students s 
+                                INNER JOIN inscripciones i ON s.matristu = i.students_matristu 
+                                INNER JOIN actividad a ON a.idActividad = i.Actividad_idActividad 
+                                INNER JOIN teachers t ON a.teachers_matritea = t.matritea 
                                 INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
-                                INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
-                                GROUP BY s.matristu";
+                                INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera";
 
                                 $stmt = mysqli_prepare($conexion, $sql);
                                 mysqli_stmt_execute($stmt);
@@ -152,8 +168,8 @@
                             <td><?php echo htmlentities($row['stuUser']) ?></td>
                             <td><?php echo htmlentities($row['stuClav']) ?></td>
                             <td><?php echo htmlentities($row['teachNames']) ?></td>
-                            <td><?php echo htmlentities($row['carreNombre']) ?></td>
                             <td><?php echo htmlentities($row['actNombre']) ?></td>
+                            <td><?php echo htmlentities($row['carreNombre']) ?></td>
                             <td><?php echo htmlentities($row['perPeriodo']) ?></td>
                                 <td>
                                     <a href="editalum.php?matristu=<?php echo $row['matristu']?>">
@@ -199,7 +215,7 @@
                         <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
                     </div>
                     <center>
-                        <p>kevin enrique, Monse Cabadilla @ 2023 | TESCHA-Ingeniería Informática</p>
+                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
                     </center>
                 </div>
             </div>

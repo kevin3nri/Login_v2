@@ -110,9 +110,15 @@
 						<span class="focus-input100" data-placeholder="Telefono"></span>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Carrera">
-						<input class="input100" type="text" name="stuCare">
-						<span class="focus-input100" data-placeholder="Carrera"></span>
+                    <div class="wrap-input100 validate-input">Carrera
+						<select class="form-select" aria-label="Default select example" name="stuCare">
+							<option value="Ing. Sistemas Computacionales">Ing. Sistemas Computacionales</option>
+                            <option value="Ing. Industrial">Ing. Industrial</option>
+							<option value="Ing. Informática">Ing. Informática</option>
+                            <option value="Ing. Electromecánica">Ing. Electromecánica</option>
+							<option value="Ing. Electrónica">Ing. Electrónica</option>
+							<option value="Ing. Administración">Ing. Administración</option>   
+                        </select>  
 					</div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Semester">
@@ -200,7 +206,7 @@
                         <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
                     </div>
                     <center>
-                        <p>kevin enrique, Monse Cabadilla @ 2023 | TESCHA-Ingeniería Informática</p>
+                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
                     </center>
                 </div>
             </div>

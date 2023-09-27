@@ -53,31 +53,46 @@
     <div>
         <nav class="navbar bg-body-tertiary">
             <div class="container">
-                <h1>Alta docentes</h1>
+                <h1>Docentes</h1>
             <a class="navbar-brand">
                 <img src="images/tescha1.jpg" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
             <a class="navbar-brand">
                 <img src="images/informatica.png" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
+            <style>
+                .bold-text {
+                    font-weight: bold;
+                }
+            </style>
             <a class="navbar-brand">
-                <a><?php echo'Bienvenido '.$_SESSION['admNames'];?></a>
+                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['admNames'];?></a>
             </a>
             <a class="navbar-brand">
-                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">CERRAR SESIÓN</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">Cerrar Sesión</a></li>
             </a>
             </div>
         </nav>
     </div>
-    <div>
-        <nav aria-label="breadcrumb">
+    <div class="text-right">
+        <nav class="navbar navbar-expand-lg" aria-label="breadcrumb">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="altadmin.php">Administradores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="altas.php">Docentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="altasalumnos.php">Alumnos</a>
+                    </li>
+                </ul>
+            </div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="altadmin.php">ADMINISTRADOR</a></li>
-                <li class="breadcrumb-item active" aria-current="page">DOCENTES</a></li>
-                <li class="breadcrumb-item"><a href="altasalumnos.php">ALUMNOS</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><strong>DOCENTES</strong></a></li>
             </ol>
-            
-          </nav>
+        </nav>
     </div>
         <!-- End Page Title -->
 <main id="main" class="main">
@@ -191,7 +206,7 @@
                         <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
                     </div>
                     <center>
-                        <p>kevin enrique, Monse Cabadilla @ 2023 | TESCHA-Ingeniería Informática</p>
+                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
                     </center>
                 </div>
             </div>

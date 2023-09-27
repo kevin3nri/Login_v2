@@ -5,7 +5,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $correo = $_POST['admMail'];
-        $password = $_POST['admClue'];
+        $password = md5($_POST['admClue']);
     
         // Escapar los valores de correo y contraseña si es necesario
         $correo = mysqli_real_escape_string($conexion, $correo);

@@ -60,21 +60,41 @@
             <a class="navbar-brand">
                 <img src="images/informatica.png" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
+            <style>
+                .bold-text {
+                    font-weight: bold;
+                }
+            </style>
             <a class="navbar-brand">
-                <a><?php echo'Bienvenido '.$_SESSION['teachNames'];?></a>
+                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['teachNames'];?></a>
             </a>
             <a class="navbar-brand">
-                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">CERRAR SESIÓN</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">Cerrar Sesión</a></li>
             </a>
             </div>
         </nav>
     </div>
     <div>
-        <nav aria-label="breadcrumb">
+    <nav class="navbar navbar-expand-lg" aria-label="breadcrumb">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="docente.php">Datos Docente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentelista.php">Listas de Alumnos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docenteasis.php">Listas de Asistencia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentepdf.php">Subir Archivos</a>
+                    </li>
+                </ul>
+            </div>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">DOCENTE</a></li>
             </ol>
-            
           </nav>
     </div>
         <!-- End Page Title -->
@@ -109,8 +129,6 @@
                                 <th>Genero</th>
                                 <th>Correo</th>
                                 <th>Telefono</th>
-                                <th>Usuario</th>
-                                <th>Contraseña</th>
                                 <th>Actividad Complementaria</th>
                                 <th>Tipo de Actividad</th>
                                 <th>Periodo</th>
@@ -142,8 +160,6 @@
                             <td><?php echo htmlentities($row['teachSex']) ?></td>
                             <td><?php echo htmlentities($row['teachMail']) ?></td>
                             <td><?php echo htmlentities($row['teachPhone']) ?></td>
-                            <td><?php echo htmlentities($row['teachUser']) ?></td>
-                            <td><?php echo htmlentities($row['teachClue']) ?></td>
                             <td><?php echo htmlentities($row['actNombre']) ?></td>
                             <td><?php echo htmlentities($row['carreNombre']) ?></td>
                             <td><?php echo htmlentities($row['perPeriodo']) ?></td> 
@@ -183,7 +199,7 @@
                         <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
                     </div>
                     <center>
-                        <p>kevin enrique, Monse Cabadilla @ 2023 | TESCHA-Ingeniería Informática</p>
+                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
                     </center>
                 </div>
             </div>
