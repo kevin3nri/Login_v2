@@ -90,6 +90,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="docentepdf.php">Subir Archivos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentegrafica.php">Grafica de alumnos por Genero</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentegenerapdf.php">Genera PDF</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentehorarioact.php">Horario de Actividades</a>
+                    </li>
                 </ul>
             </div>
             <ol class="breadcrumb">
@@ -112,7 +121,10 @@
                                         <th>Actividad Complementaria</th>
                                         <th>Tipo de Actividad</th>
                                         <th>Periodo</th>
-                                        <th>Lista de Alumnos</th>
+                                        <th>Matricula</th>
+                                        <th>Nombre del Alumno</th>
+                                        <th>Apellido del Alumno</th>
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,12 +132,14 @@
 
                                         include ("php/conexion.php");
 
-                                        $sql = "SELECT t.matritea,t.teachNames,t.teachUser,t.teachClue,a.idActividad, a.actNombre,p.perPeriodo,c.carreNombre 
-                                        FROM teachers t
-                                        INNER JOIN actividad a ON t.matritea = a.teachers_matritea 
-                                        INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
-                                        INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
-                                        WHERE t.teachNames = ?";
+                                        $sql = "SELECT t.matritea, t.teachNames, a.idActividad, a.actNombre,i.idInscripciones, p.perPeriodo, c.carreNombre, s.matristu, s.stunNames, s.stuLastNames 
+                                                FROM teachers t 
+                                                INNER JOIN actividad a ON t.matritea = a.teachers_matritea 
+                                                INNER JOIN inscripciones i ON a.idActividad = i.Actividad_idActividad 
+                                                INNER JOIN students s ON i.students_matristu = s.matristu 
+                                                INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
+                                                INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
+                                                WHERE t.teachNames = ? ";
 
                                         $stmt = mysqli_prepare($conexion, $sql);
                                         mysqli_stmt_bind_param($stmt, "s", $_SESSION['teachNames']);
@@ -138,13 +152,24 @@
                                         <td><?php echo htmlentities($row['actNombre']) ?></td>
                                         <td><?php echo htmlentities($row['carreNombre']) ?></td>
                                         <td><?php echo htmlentities($row['perPeriodo']) ?></td>
+                                        <td><?php echo htmlentities($row['matristu']) ?></td>
+                                        <td><?php echo htmlentities($row['stunNames']) ?></td>
+                                        <td><?php echo htmlentities($row['stuLastNames']) ?></td>
                                         <td>
-                                            <a href="php/docente/listalum.php?idActividad=<?php echo $row['idActividad']; ?>" class="btn btn-danger">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                            </svg> Descargar</a>
-                                        </td> 
+                                            <a href="docentesubir.php?idActividad=<?php echo $row['idActividad']?>&matristu=<?php echo $row['matristu']?>">
+                                            <button class="btn btn-primary" type="submit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                                </svg> Subir</button></a>
+                                            
+                                            <a href="modificar_pdf.php?idActividad=<?php echo $row['idActividad']; ?>&matristu=<?php echo $row['matristu']; ?>">
+                                            <button class="btn btn-success" type="submit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                                </svg> Editar PDF</button></a>
+                                        </td>
                                     </tr>
                                     <?php
                                         }

@@ -34,55 +34,52 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/docente/agreact.php" method="POST">
 					<span class="login100-form-title p-b-26">
-						Agregar Nombre de la Actividad
+						Grafica de Alumnos Inscritos a la Actividad Complementaria
 					</span>
-
-                    <div class="validate-input" data-validate = "IdAdministrador">
-						<input class="input100" type="hidden" name="idActividad" >
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">
-						<input class="input100" type="text" name="Nombre_Act" >
-						<span class="focus-input100" data-placeholder="Nombre"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input" data-validate = "Limite">
-						<input class="input100" type="text" name="actLimit" >
-						<span class="focus-input100" data-placeholder="Limite"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Periodo</label>
                         <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM periodo";
-                        $result = $conexion->query($query);
+                            include ("php/conexion.php");
+
+                            $idActividad= $_GET['idActividad'];
+
+                            $sql = "SELECT a.idActividad,a.actNombre,t.matritea,t.teachNames,c.idcarrera,c.carreNombre,p.idPeriodo,p.perPeriodo, COUNT(s.stuSex) ,SUM(CASE WHEN s.stuSex = 'F' THEN 1 ELSE 0 END) AS InsAlum_F, SUM(CASE WHEN s.stuSex = 'M' THEN 1 ELSE 0 END) AS InsAlum_M 
+                            FROM inscripciones i 
+                            INNER JOIN actividad a ON i.Actividad_idActividad = a.idActividad 
+                            INNER JOIN teachers t ON a.teachers_matritea = t.matritea 
+                            INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera 
+                            INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
+                            INNER JOIN students s ON i.students_matristu = s.matristu
+                            WHERE Actividad_idActividad ='$idActividad'";
+                            $result = $conexion->query($sql);
+                            $row = $result->fetch_assoc();
+                            $conexion->close();  
                         ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="periodo">
-                            <option selected>Seleccione Periodo</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idPeriodo"]; ?> " ><?php echo $row["perPeriodo"];?></option> 
-                            <?php } ?>
-                        </select>
+                    <!--datos de la actividad complementaria que imparte el docente---> 
+                    <div class="validate-input" data-validate = "idActividad">
+						<input class="input100" type="hidden" name="idActividad" value="<?php echo $_GET['idActividad']; ?>" style="font-weight: bold;">
+					</div>
+
+                    <div class="validate-input" data-validate = "carreNombre"> Nombre de la Actividad Complementaria:
+						<input class="input100" type="text" name="carreNombre" disabled value="<?php echo $row['actNombre']; ?>" style="font-weight: bold;">
+					</div>
+
+                    <div class="validate-input" data-validate = "carreNombre"> Tipo de la Actividad Complementaria:
+						<input class="input100" type="text" name="carreNombre" disabled value="<?php echo $row['carreNombre']; ?>" style="font-weight: bold;">
+					</div>
+
+                    <div class="validate-input" data-validate = "carreNombre"> Periodo de la Actividad Complementaria:
+						<input class="input100" type="text" name="carreNombre" disabled value="<?php echo $row['perPeriodo']; ?>" style="font-weight: bold;">
+					</div>
+
+                    <!--datos de la actividad complementaria que imparte el docente donde se visualiza el genero de los Alumnos inscritos---> 
+                    Total de Alumnos Inscritos:
+                    <input class="input100" type="text" name="stuSex" disabled value="<?php echo $row['InsAlum_F'] + $row['InsAlum_M']; ?>" style="font-weight: bold;"> 
+
+                    <!--grafica de pastel del genero de los alumnos inscritos en la actividad complementaria---> 
+                    <div id="chartContainer" style="width: 40%; margin: 0 auto;">
+                        <canvas id="pieChart"></canvas>
                     </div>
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Tipo de Actividad</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM carrera";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="carrera">
-                            <option selected>Seleccione el tipo de actividad</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idcarrera"]; ?> " ><?php echo $row["carreNombre"];?></option> 
-                            <?php } ?>
-                        </select>
-                    </div>
-                    
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
@@ -91,11 +88,11 @@
 							</button>
 						</div>
 					</div>
-				</form>
+
 				<div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <a href="docente.php">
+                        <a href="docentegrafica.php">
                         <button class="login100-form-btn">
                             Regresar
                         </button></a>
@@ -104,8 +101,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="dropDownSelect1"></div>
   
     </main>
 <!-- End #main -->
@@ -159,6 +154,34 @@
    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 <!--===============================================================================================-->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtén los datos de inscripción (número de hombres y mujeres) de PHP
+    var hombres = <?php echo $row['InsAlum_M']; ?>;
+    var mujeres = <?php echo $row['InsAlum_F']; ?>;
+    
+    var ctx = document.getElementById('pieChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Hombres', 'Mujeres'],
+            datasets: [{
+                data: [hombres, mujeres],
+                backgroundColor: ['blue', 'pink']
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Alumnos Inscritos por Género'
+            }
+        }
+    });
+});
+</script>
 </script>
 </body>
 </php>  

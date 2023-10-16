@@ -34,55 +34,49 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/docente/agreact.php" method="POST">
+				<form action="php/docente/editlimiact.php" method="POST">
 					<span class="login100-form-title p-b-26">
-						Agregar Nombre de la Actividad
+						Agregar Limitacion 
 					</span>
+                    <?php
+                        include ("php/conexion.php");
+                        $idActividad = $_GET['idActividad'];
+                        $idPeriodo = $_GET['idPeriodo'];
+                        $idcarrera = $_GET['idcarrera'];
+                        $matritea = $_GET['matritea'];     
+                        
+                        $sql = "SELECT * FROM actividad WHERE idActividad ='$idActividad'";
+                        $result = $conexion->query($sql);
+                        $row = $result->fetch_assoc();
+                        $conexion->close(); 
 
-                    <div class="validate-input" data-validate = "IdAdministrador">
-						<input class="input100" type="hidden" name="idActividad" >
+                    ?>
+                    <div class="validate-input" data-validate = "idActividad">
+						<input class="input100" type="hidden" name="idActividad" value="<?php echo $_GET['idActividad']; ?>">
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">
-						<input class="input100" type="text" name="Nombre_Act" >
-						<span class="focus-input100" data-placeholder="Nombre"></span>
+					<div class="wrap-input100 validate-input" data-validate = "actNombre">
+						<input class="input100" type="text" name="actNombre" value="<?php echo $row['actNombre']; ?>">
+                        <span class="focus-input100" data-placeholder="Nombre de Actividad Complementaria"></span>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Limite">
-						<input class="input100" type="text" name="actLimit" >
-						<span class="focus-input100" data-placeholder="Limite"></span>
+					<div class="wrap-input100 validate-input" data-validate = "actLimit">
+						<input class="input100" type="text" name="actLimit" value="<?php echo $row['actLimit']; ?>">
+                        <span class="focus-input100" data-placeholder="Limitar"></span>
 					</div>
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Periodo</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM periodo";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="periodo">
-                            <option selected>Seleccione Periodo</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idPeriodo"]; ?> " ><?php echo $row["perPeriodo"];?></option> 
-                            <?php } ?>
-                        </select>
-                    </div>
+					<div class="validate-input" data-validate = "idPeriodo">
+						<input class="input100" type="hidden" name="Periodo_idPeriodo" value="<?php echo $_GET['idPeriodo']; ?>">
+					</div>
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Tipo de Actividad</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM carrera";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="carrera">
-                            <option selected>Seleccione el tipo de actividad</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idcarrera"]; ?> " ><?php echo $row["carreNombre"];?></option> 
-                            <?php } ?>
-                        </select>
-                    </div>
-                    
+                    <div class="validate-input" data-validate = "idcarrera">
+						<input class="input100" type="hidden" name="carrera_idcarrera" value="<?php echo $_GET['idcarrera']; ?>">
+					</div>
+
+                    <div class="validate-input" data-validate = "matritea">
+						<input class="input100" type="hidden" name="teachers_matritea" value="<?php echo $_GET['matritea']; ?>">
+					</div>
+
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>

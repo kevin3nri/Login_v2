@@ -112,12 +112,12 @@
 
                     <div class="wrap-input100 validate-input">Carrera
 						<select class="form-select" aria-label="Default select example" name="stuCare">
-							<option value="Ing. Sistemas Computacionales">Ing. Sistemas Computacionales</option>
-                            <option value="Ing. Industrial">Ing. Industrial</option>
-							<option value="Ing. Informática">Ing. Informática</option>
-                            <option value="Ing. Electromecánica">Ing. Electromecánica</option>
-							<option value="Ing. Electrónica">Ing. Electrónica</option>
-							<option value="Ing. Administración">Ing. Administración</option>   
+							<option value="Ingeniería Sistemas Computacionales">Ingeniería Sistemas Computacionales</option>
+                            <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+							<option value="Ingeniería Informática">Ingeniería Informática</option>
+                            <option value="Ingeniería Electromecánica">Ingeniería Electromecánica</option>
+							<option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
+							<option value="Ingeniería Administración">Ingeniería Administración</option>   
                         </select>  
 					</div>
 

@@ -34,60 +34,42 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/docente/agreact.php" method="POST">
+				<form action="php/docente/modificapdf.php" method="POST" enctype="multipart/form-data">
 					<span class="login100-form-title p-b-26">
-						Agregar Nombre de la Actividad
+						Editar el Archivo PDF
 					</span>
+                    <?php
+                            include ("php/conexion.php");
 
-                    <div class="validate-input" data-validate = "IdAdministrador">
-						<input class="input100" type="hidden" name="idActividad" >
-					</div>
+                            $matristu = isset($_GET['matristu']) ? $_GET['matristu'] : '';
+                            $idActividad = $_GET['idActividad'];
 
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">
-						<input class="input100" type="text" name="Nombre_Act" >
-						<span class="focus-input100" data-placeholder="Nombre"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input" data-validate = "Limite">
-						<input class="input100" type="text" name="actLimit" >
-						<span class="focus-input100" data-placeholder="Limite"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Periodo</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM periodo";
-                        $result = $conexion->query($query);
+                            $sql = "SELECT * FROM subir_doc WHERE Actividad_idActividad ='$idActividad'";
+                            $result = $conexion->query($sql);
+                            $row = $result->fetch_assoc();
+                            $conexion->close();  
                         ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="periodo">
-                            <option selected>Seleccione Periodo</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idPeriodo"]; ?> " ><?php echo $row["perPeriodo"];?></option> 
-                            <?php } ?>
-                        </select>
+                    <div class="validate-input" data-validate = "idInscripciones">
+						<input class="input100" type="hidden" name="idInscripciones" >
+					</div>
+
+					<div class="validate-input">Subir Documento
+                        <input type="file"  name="archivo" accept="application/pdf">
                     </div>
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Tipo de Actividad</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM carrera";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="carrera">
-                            <option selected>Seleccione el tipo de actividad</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idcarrera"]; ?> " ><?php echo $row["carreNombre"];?></option> 
-                            <?php } ?>
-                        </select>
-                    </div>
+                    <div class="validate-input" data-validate = "idActividad">
+						<input class="input100" type="hidden" name="idActividad" value="<?php echo $_GET['idActividad']; ?>">
+					</div>
+
+                    <div class="validate-input" data-validate = "student">
+						<input class="input100" type="hidden" name="student" value="<?php echo $_GET['matristu']; ?>">
+					</div>
                     
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn" type="submit" name="submit">
-								Guardar
+								Subir
 							</button>
 						</div>
 					</div>
@@ -95,7 +77,7 @@
 				<div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <a href="docente.php">
+                        <a href="docentepdf.php">
                         <button class="login100-form-btn">
                             Regresar
                         </button></a>
@@ -105,8 +87,6 @@
 		</div>
 	</div>
 	
-	<div id="dropDownSelect1"></div>
-  
     </main>
 <!-- End #main -->
     <!-- ======= Footer ======= -->
@@ -161,4 +141,4 @@
 
 </script>
 </body>
-</php>  
+</php>

@@ -1,57 +1,58 @@
 <?php
 session_start();
+
 $conexion = mysqli_connect("localhost", "root", "", "proyecto");
 
-$idIns = $_POST['idInscripciones'];
-$idAct = $_POST['idActividad'];
 $matristu = $_SESSION['matristu'];
+$idAct = $_POST['idActividad'];
 
-$sql = "INSERT INTO inscripciones (idInscripciones, InsAlum, InsLimit, Actividad_idActividad, students_matristu)
-VALUES (?, 1, 0, ?, ?)";
+// Get the limit for this activity
+$sqlGetActivityLimit = "SELECT actlimit FROM actividad WHERE idActividad = ?";
+$stmtGetActivityLimit = mysqli_prepare($conexion, $sqlGetActivityLimit);
+mysqli_stmt_bind_param($stmtGetActivityLimit, "s", $idAct);
+mysqli_stmt_execute($stmtGetActivityLimit);
+mysqli_stmt_bind_result($stmtGetActivityLimit, $activityLimit);
+mysqli_stmt_fetch($stmtGetActivityLimit);
+mysqli_stmt_close($stmtGetActivityLimit);
 
-//verifica que el alumno inscrito no se repita en la base de datos
-$verificar_ins = mysqli_query($conexion, "SELECT * FROM inscripciones WHERE students_matristu = '$matristu'");
- 
-if(mysqli_num_rows($verificar_ins) > 0){
+// Count the number of registrations for this activity
+$sqlCountRegistrations = "SELECT COUNT(*) AS totalRegistrations FROM inscripciones WHERE Actividad_idActividad = ?";
+$stmtCountRegistrations = mysqli_prepare($conexion, $sqlCountRegistrations);
+mysqli_stmt_bind_param($stmtCountRegistrations, "s", $idAct);
+mysqli_stmt_execute($stmtCountRegistrations);
+mysqli_stmt_bind_result($stmtCountRegistrations, $totalRegistrations);
+mysqli_stmt_fetch($stmtCountRegistrations);
+mysqli_stmt_close($stmtCountRegistrations);
+
+if ($totalRegistrations >= $activityLimit) {
+    // Registration limit has been reached
     echo '
-       <script>
-            alert("Este usuario ya esta inscrito en un curso");
-            window.location = "../../alumins.php";
-        </script>
-    ';
-   exit();
-}
-
-//verifica que la actividad no se repita en la base de datos
-$verificar_ins = mysqli_query($conexion, "SELECT * FROM inscripciones WHERE Actividad_idActividad = '$idAct'");
- 
-if(mysqli_num_rows($verificar_ins) > 0){
-    echo '
-       <script>
-            alert("Este usuario ya esta inscrito en un curso");
-            window.location = "../../alumins.php";
-        </script>
-    ';
-   exit();
-}
-
-$stmt = mysqli_prepare($conexion, $sql);
-mysqli_stmt_bind_param($stmt, "sss", $idIns, $idAct, $matristu);
-$dato = mysqli_stmt_execute($stmt);
-
-    if($dato){
-        echo '
         <script>
-            alert("Inscripcion exitosa");
+            alert("No puedes inscribirte en esta actividad. El límite de inscripción se ha alcanzado.");
             window.location = "../../alumins.php";
         </script>
     ';
-    }else{
+} else {
+    // The student can register
+    $sqlInsert = "INSERT INTO inscripciones (InsAlum, Actividad_idActividad, students_matristu) VALUES (1, ?, ?)";
+    $stmtInsert = mysqli_prepare($conexion, $sqlInsert);
+    mysqli_stmt_bind_param($stmtInsert, "ss", $idAct, $matristu);
+
+    if (mysqli_stmt_execute($stmtInsert)) {
         echo '
-        <script>
-            alert("Error al realizar la incripcion");
-            window.location = "../../alumins.php";
-        </script>
-    ';
+            <script>
+                alert("Inscripción exitosa");
+                window.location = "../../alumins.php";
+            </script>
+        ';
+    } else {
+        echo '
+            <script>
+                alert("Inscripción no ingresada, error");
+                window.location = "../../alumins.php";
+            </script>
+        ';
     }
+}
+
 ?>

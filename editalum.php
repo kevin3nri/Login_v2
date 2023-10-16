@@ -119,9 +119,15 @@
 						<span class="focus-input100" data-placeholder="Telefono"></span>
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Carrera">
-						<input class="input100" type="text" name="stuCare" value="<?php echo $row['stuCare']; ?>">
-						<span class="focus-input100" data-placeholder="Carrera"></span>
+                    <div class="wrap-input100 validate-input">Carrera
+						<select class="form-select" aria-label="Default select example" name="stuCare" value="<?php echo $row['stuCare']; ?>">
+							<option value="Ingeniería Sistemas Computacionales">Ingeniería Sistemas Computacionales</option>
+                            <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+							<option value="Ingeniería Informática">Ingeniería Informática</option>
+                            <option value="Ingeniería Electromecánica">Ingeniería Electromecánica</option>
+							<option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
+							<option value="Ingeniería Administración">Ingeniería Administración</option>   
+                        </select>  
 					</div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Semester">

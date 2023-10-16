@@ -1,6 +1,6 @@
 <?php
-    
-    session_start();
+///verifica la sesion del maestro
+session_start();
 
     if(!isset($_SESSION['teachNames'])){
         echo '<script>
@@ -11,16 +11,21 @@
         die();
     }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+//realiza la conexion con la base de datos 
     $conexion = mysqli_connect("localhost", "root", "", "proyecto");
 
+    //inserta los datos del formulario
     $idac = $_POST['idActividad'];
     $acti = $_POST['Nombre_Act'];
+    $actLimit =$_POST['actLimit'];
     $peri = $_POST['periodo'];
     $carre = $_POST['carrera'];
     $matritea = $_SESSION['matritea'];
 
-    $sql = "INSERT INTO actividad (idActividad,actNombre,Periodo_idPeriodo,carrera_idcarrera,teachers_matritea)
-     VALUES ('$idac','$acti','$peri','$carre','$matritea')";
+    //inserta datos en la base de datos
+    $sql = "INSERT INTO actividad (idActividad,actNombre,actLimit,Periodo_idPeriodo,carrera_idcarrera,teachers_matritea)
+     VALUES ('$idac','$acti','$actLimit','$peri','$carre','$matritea')";
 
     $dato = mysqli_query($conexion, $sql);
 
@@ -40,3 +45,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ';
     }
 }
+?>

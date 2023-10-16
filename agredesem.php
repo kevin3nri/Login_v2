@@ -34,55 +34,47 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/docente/agreact.php" method="POST">
+				<form action="php/docente/agredes.php" method="POST">
 					<span class="login100-form-title p-b-26">
-						Agregar Nombre de la Actividad
+						Agregar Desempeño del Alumno
 					</span>
+                    <?php
+                    $idActividad = $_GET['idActividad'];
+                    $matristu = $_GET['matristu'];
+                    ?>
 
-                    <div class="validate-input" data-validate = "IdAdministrador">
-						<input class="input100" type="hidden" name="idActividad" >
+                    <div class="validate-input" data-validate = "idDesempenio">
+                        <input type="hidden" name="idDesempenio">
+                    </div> 
+
+                    <div class="wrap-input100 validate-input">Desempeño
+						<select class="form-select" aria-label="Default select example" name="Desem">
+							<option value="Excelente">Excelente</option>
+                            <option value="Notable">Notable</option>
+							<option value="Bueno">Bueno</option>
+                            <option value="Suficiente">Suficiente</option>
+							<option value="Insuficiente">Insuficiente</option>   
+                        </select>  
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">
-						<input class="input100" type="text" name="Nombre_Act" >
-						<span class="focus-input100" data-placeholder="Nombre"></span>
+                    <div class="wrap-input100 validate-input">Valor
+						<select class="form-select" aria-label="Default select example" name="Valor">
+							<option value="4">4</option>
+                            <option value="3">3</option>
+							<option value="2">2</option>
+                            <option value="1">1</option>
+							<option value="0">0</option>  
+                        </select>  
 					</div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Limite">
-						<input class="input100" type="text" name="actLimit" >
-						<span class="focus-input100" data-placeholder="Limite"></span>
-					</div>
+                    <div class="validate-input" data-validate = "idActividad">
+                        <input type="hidden" name="idActividad" value="<?php echo $_GET['idActividad']; ?>">
+                    </div> 
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Periodo</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM periodo";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="periodo">
-                            <option selected>Seleccione Periodo</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idPeriodo"]; ?> " ><?php echo $row["perPeriodo"];?></option> 
-                            <?php } ?>
-                        </select>
-                    </div>
+                    <div class="validate-input" data-validate = "matristu"></div>
+                        <input type="hidden" name="matristu" value="<?php echo $_GET['matristu']; ?>">
+                    </div>  
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Tipo de Actividad</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM carrera";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="carrera">
-                            <option selected>Seleccione el tipo de actividad</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idcarrera"]; ?> " ><?php echo $row["carreNombre"];?></option> 
-                            <?php } ?>
-                        </select>
-                    </div>
-                    
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
@@ -95,7 +87,7 @@
 				<div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <a href="docente.php">
+                        <a href="docentegenerapdf.php">
                         <button class="login100-form-btn">
                             Regresar
                         </button></a>
@@ -104,9 +96,7 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="dropDownSelect1"></div>
-  
+	 
     </main>
 <!-- End #main -->
     <!-- ======= Footer ======= -->

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include('/xampp/htdocs/login-form-v2/Login_v2/vendor/autoload.php');
+include('/xampp/htdocs/Login_v2/vendor/autoload.php');
 
 $conexion = mysqli_connect("localhost", "root", "", "proyecto");
 
@@ -14,7 +14,7 @@ if ($conexion) {
         $idActividad = $_GET['idActividad'];
 
         // Consulta SQL to get the data from the database for a specific activity
-        $sql = "SELECT t.matritea,t.teachNames,a.actNombre,p.perPeriodo,c.carreNombre,s.matristu, s.stunNames, s.stuLastNames, s.stuCare 
+        $sql = "SELECT t.matritea, t.teachNames, a.actNombre, p.perPeriodo, c.carreNombre, s.matristu, s.stunNames, s.stuLastNames, s.stuCare 
         FROM teachers t 
         INNER JOIN actividad a ON t.matritea = a.teachers_matritea 
         INNER JOIN inscripciones i ON a.idActividad = i.Actividad_idActividad 
@@ -40,15 +40,14 @@ if ($conexion) {
             $excel = new Spreadsheet();
             $hojaActiva = $excel->getActiveSheet();
             $hojaActiva->setTitle("Alumnos");
-
+            
+            //INICIO DE LA HOJA DE EXCEL
             $hojaActiva->setCellValue('A1', 'Ingenieria');
             $hojaActiva->setCellValue('B1', 'Docente');
             $hojaActiva->setCellValue('C1', 'Nombre de la Actividad');
             $hojaActiva->setCellValue('D1', 'Tipo de Actividad');
             $hojaActiva->setCellValue('E1', 'Periodo');
-            $hojaActiva->setCellValue('A2', 'Matrícula Estudiante');
-            $hojaActiva->setCellValue('B2', 'Nombre de Estudiante');
-            $hojaActiva->setCellValue('C2', 'Apellido Estudiante');
+
             // Aplicar bordes a las celdas de título
             $borderStyleTitle = [
                 'borders' => [
@@ -60,7 +59,9 @@ if ($conexion) {
             ];
 
             $hojaActiva->getStyle('A1:E1')->applyFromArray($borderStyleTitle);
+            //FINAL DE LA FILA 1 DE EXCEL
 
+            //INICIO DE LA FILA 2 DE EXCEL
             $fila = 2;
 
             // Define el estilo de borde para las celdas de datos
@@ -85,38 +86,57 @@ if ($conexion) {
                 $hojaActiva->getColumnDimension('E')->setWidth(12);
                 $hojaActiva->setCellValue('E' . $fila, $rows['perPeriodo']);
                 
-                    // Aplicar bordes a las celdas de datos obtenidos de la base de datos
+                 // Aplicar bordes a las celdas de datos obtenidos de la base de datos
                 $hojaActiva->getStyle('A' . $fila . ':E' . $fila)->applyFromArray($borderStyle);
 
+                $borderStyleTitle = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000'],
+                        ],
+                    ],
+                ];      
 
-                $fila = 3; // Empezar en la fila 3
+            }
+            //FINAL DE LA FILA 2 DE EXCEL
 
-                // Ingresar datos en la fila 3
+            //INICIO DE LA FILA 3 DE EXCEL 
+            $hojaActiva->setCellValue('A3', 'Matrícula Estudiante');
+            $hojaActiva->setCellValue('B3', 'Nombre de Estudiante');
+            $hojaActiva->setCellValue('C3', 'Apellido Estudiante');
+
+            $hojaActiva->getStyle('A3:C3')->applyFromArray($borderStyleTitle);
+            //FINAL DE FILA 3 DE EXCEL
+
+            $fila = 4; // Empezar en la fila 4
+
+            $borderStyle = [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => 'FF000000'],
+                    ],
+                ],
+            ];
+
+            // Ingresar datos en la fila 4
+            mysqli_data_seek($result, 0); // Rebobinar el puntero del conjunto de resultados al principio
+
+            while ($rows1 = mysqli_fetch_assoc($result)) {
                 $hojaActiva->getColumnDimension('A')->setWidth(20);
-                $hojaActiva->setCellValue('A' . $fila, $rows['matristu']);
+                $hojaActiva->setCellValue('A' . $fila, $rows1['matristu']);
                 $hojaActiva->getColumnDimension('B')->setWidth(20);
-                $hojaActiva->setCellValue('B' . $fila, $rows['stunNames']);
+                $hojaActiva->setCellValue('B' . $fila, $rows1['stunNames']);
                 $hojaActiva->getColumnDimension('C')->setWidth(20);
-                $hojaActiva->setCellValue('C' . $fila, $rows['stuLastNames']);
-                
-                $fila++; // Incrementar el contador de fila para la siguiente fila
-                
-                // Ingresar datos en la fila 4
-                $hojaActiva->getColumnDimension('A')->setWidth(20);
-                $hojaActiva->setCellValue('A' . $fila, $otraVariable);
-                $hojaActiva->getColumnDimension('B')->setWidth(20);
-                $hojaActiva->setCellValue('B' . $fila, $otraVariable);
-                $hojaActiva->getColumnDimension('C')->setWidth(20);
-                $hojaActiva->setCellValue('C' . $fila, $otraVariable);
+                $hojaActiva->setCellValue('C' . $fila, $rows1['stuLastNames']);
 
                 // Aplicar bordes a las celdas de datos obtenidos de la base de datos
                 $hojaActiva->getStyle('A' . $fila . ':C' . $fila)->applyFromArray($borderStyle);
 
-
                 $fila++;
             }
-
-            
+         
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename="Alumnos.xlsx"');
             header('Cache-Control: max-age=0');

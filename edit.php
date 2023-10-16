@@ -87,6 +87,11 @@
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
+                    <div class="wrap-input100 validate-input" data-validate = "Estado">
+						<input class="input100" type="text" name="admState" value="<?php echo $row['admState']; ?>">
+						<span class="focus-input100" data-placeholder="Estado"></span>
+					</div>
+
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>

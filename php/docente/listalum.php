@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include('/xampp/htdocs/login-form-v2/Login_v2/vendor/autoload.php');
+include('/xampp/htdocs/Login_v2/vendor/autoload.php');
 
 $conexion = mysqli_connect("localhost", "root", "", "proyecto");
 

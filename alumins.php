@@ -85,6 +85,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="alumins.php">Inscripciones</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="alumhorario.php">Horarios</a>
+                    </li>
                 </ul>
             </div>
             <ol class="breadcrumb">
@@ -106,20 +109,19 @@
                                         <th>Docente</th>
                                         <th>Nombre de la Actividad</th>
                                         <th>Periodo</th>
+                                        <th>Limite de alumnos Permitidos</th>
                                         <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                         include("php/conexion.php");
-
-                                        $sql = "SELECT t.matritea, t.teachNames, a.idActividad, a.actNombre, p.perPeriodo 
-                                        FROM teachers t 
-                                        INNER JOIN actividad a ON t.matritea = a.teachers_matritea  
-                                        INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo";
+                                        $sql = "SELECT t.matritea, t.teachNames, a.idActividad, a.actNombre, a.actlimit, p.perPeriodo 
+                                                FROM teachers t 
+                                                INNER JOIN actividad a ON t.matritea = a.teachers_matritea  
+                                                INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo";
 
                                         $stmt = mysqli_prepare($conexion, $sql);
-                                        
                                         mysqli_stmt_execute($stmt);
 
                                         $result = mysqli_stmt_get_result($stmt);
@@ -131,13 +133,14 @@
                                         <td><?php echo htmlentities($row['teachNames']) ?></td>
                                         <td><?php echo htmlentities($row['actNombre']) ?></td>
                                         <td><?php echo htmlentities($row['perPeriodo']) ?></td>
+                                        <td><?php echo htmlentities($row['actlimit']) ?></td>
                                         <td>
-                                        <form action="php/alumno/inscr.php" method="POST">
-                                            <input type="hidden" name="idInscripciones">
-                                            <input type="hidden" name="idActividad" value="<?php echo htmlentities($row['idActividad']) ?>">
-                                            <input type="hidden" name="matristu">
-                                            <button type="submit" class="btn btn-warning" name="submit">Inscribirse</button>
-                                        </form>
+                                            <form action="php/alumno/inscr.php" method="POST">
+                                                <input type="hidden" name="idInscripciones">
+                                                <input type="hidden" name="idActividad" value="<?php echo htmlentities($row['idActividad']) ?>">
+                                                <input type="hidden" name="matristu">
+                                                <button type="submit" class="btn btn-warning" name="submit">Inscribirse</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     <?php

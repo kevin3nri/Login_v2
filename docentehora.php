@@ -34,55 +34,43 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/docente/agreact.php" method="POST">
+				<form action="php/docente/hor.php" method="POST">
 					<span class="login100-form-title p-b-26">
-						Agregar Nombre de la Actividad
+						Horario de Actividad Complementaria
 					</span>
+                    <?php
+                            include ("php/conexion.php");
 
-                    <div class="validate-input" data-validate = "IdAdministrador">
-						<input class="input100" type="hidden" name="idActividad" >
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">
-						<input class="input100" type="text" name="Nombre_Act" >
-						<span class="focus-input100" data-placeholder="Nombre"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input" data-validate = "Limite">
-						<input class="input100" type="text" name="actLimit" >
-						<span class="focus-input100" data-placeholder="Limite"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Periodo</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM periodo";
-                        $result = $conexion->query($query);
+                            $idact =$_GET['idActividad'];
+                            $sql = "SELECT * FROM horas WHERE Actividad_idActividad = '$idact'";
+                            $result = $conexion->query($sql);
+                            $row = $result->fetch_assoc();
+                            $conexion->close();  
                         ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="periodo">
-                            <option selected>Seleccione Periodo</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idPeriodo"]; ?> " ><?php echo $row["perPeriodo"];?></option> 
-                            <?php } ?>
-                        </select>
+
+                    <div class="validate-input" data-validate = "idHoras">
+						<input class="input100" type="hidden" name="idHoras">
                     </div>
 
-                    <div class="wrap-input100 validate-input">
-					<label form="select" class="form-label" >Tipo de Actividad</label>
-                        <?php
-                        include 'php/conexion.php';
-                        $query = "SELECT * FROM carrera";
-                        $result = $conexion->query($query);
-                        ?>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="carrera">
-                            <option selected>Seleccione el tipo de actividad</option>
-                            <?php while ( $row = $result->fetch_assoc() ) { ?>
-                                <option value="<?php echo $row["idcarrera"]; ?> " ><?php echo $row["carreNombre"];?></option> 
-                            <?php } ?>
-                        </select>
+					<div class="wrap-input100 validate-input" data-validate = "horfecha">
+						<input class="input100" type="date" name="horfecha">
+						<span class="focus-input100" data-placeholder="Fecha"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "horhora_ini">
+						<input class="input100" type="time" name="horhora_ini">
+						<span class="focus-input100" data-placeholder="Hora Inicio"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "horhora_fin">
+						<input class="input100" type="time" name="horhora_fin">
+						<span class="focus-input100" data-placeholder="Hora Final"></span>
+					</div>
+
+                    <div class="validate-input" data-validate = "idActividad">
+						<input class="input100" type="hidden" name="idActividad" value="<?php echo $_GET['idActividad']; ?>">
                     </div>
-                    
+
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
@@ -92,10 +80,11 @@
 						</div>
 					</div>
 				</form>
+
 				<div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <a href="docente.php">
+                        <a href="docentehorarioact.php">
                         <button class="login100-form-btn">
                             Regresar
                         </button></a>
@@ -104,8 +93,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="dropDownSelect1"></div>
   
     </main>
 <!-- End #main -->

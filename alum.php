@@ -85,10 +85,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="alumins.php">Inscripciones</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="alumhorario.php">Horarios</a>
+                    </li>
                 </ul>
             </div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Actividades Complementarias</a></li>
+                <li class="breadcrumb-item active" aria-current="page">HORARIOS</a></li>
             </ol>
         </nav>
     </div>
@@ -120,7 +123,7 @@
                                     <?php
                                         include ("php/conexion.php");
 
-                                        $sql = "SELECT s.matristu, s.stunNames, t.teachNames, a.actNombre, p.perPeriodo, c.carreNombre, u.subiNombre 
+                                        $sql = "SELECT s.matristu, s.stunNames, t.teachNames, idActividad, a.actNombre, p.perPeriodo, c.carreNombre, u.subiNombre 
                                         FROM students s 
                                         INNER JOIN inscripciones i ON s.matristu = i.students_matristu 
                                         INNER JOIN actividad a ON a.idActividad = i.Actividad_idActividad 
@@ -144,7 +147,14 @@
                                             <td><?php echo htmlentities($row['carreNombre']) ?></td>
                                             <td><?php echo htmlentities($row['actNombre']) ?></td>
                                             <td><?php echo htmlentities($row['perPeriodo']) ?></td>
-                                            <td></td>
+                                            <td>
+                                                <a href="php/alumno/descargapdf.php?idActividad=<?php echo $row['idActividad']?>"> 
+                                                <button class="btn btn-warning" form="from1" type="submit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                                </svg> Descargar</button>
+                                            </td>
                                         </tr>
                                     <?php
                                         }
