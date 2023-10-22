@@ -70,12 +70,11 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="dropDownSelect1"></div>
-  
+
     </main>
 <!-- End #main -->
     <!-- ======= Footer ======= -->
+<br>   
     <footer id="footer">
         <div class="footer-top">
             <div class="container">
@@ -100,6 +99,7 @@
             </div>
         </div>
     </footer>
+</br> 
     <!-- End Footer -->
 <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

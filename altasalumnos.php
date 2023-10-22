@@ -87,6 +87,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="altasalumnos.php">Alumnos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentegrafica.php">Grafica de alumnos por Genero</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentegenpdf.php">Genera PDF</a>
+                    </li>
                 </ul>
             </div>
             <ol class="breadcrumb">
@@ -197,6 +203,7 @@
     </main>
 <!-- End #main -->
     <!-- ======= Footer ======= -->
+<br>    
     <footer id="footer">
         <div class="footer-top">
             <div class="container">
@@ -221,6 +228,7 @@
             </div>
         </div>
     </footer>
+</br>
     <!-- End Footer -->
 <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

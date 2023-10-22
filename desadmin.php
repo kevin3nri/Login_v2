@@ -34,73 +34,46 @@
 	<div class="limiter">
 		<div class="container">
 			<div class="wrap">
-				<form action="php/editteach.php" method="POST">
+				<form action="php/archivopdf.php" method="POST">
 					<span class="login100-form-title p-b-26">
-						Editar
+						Visualiza Desempeño del Alumno que Asigno el Docente  
 					</span>
                         <?php
                             include ("php/conexion.php");
 
-                            $matritea = $_GET['matritea'];
-                            $sql = "SELECT * FROM teachers WHERE matritea  ='$matritea'";
+                            $idActividad= $_GET['idActividad'];
+                            $matristu= $_GET['matristu'];
+                            $sql = "SELECT * FROM desempenio WHERE Actividad_idActividad ='$idActividad' AND students_matristu = '$matristu'";
                             $result = $conexion->query($sql);
                             $row = $result->fetch_assoc();
                             $conexion->close();  
                         ?>
 
-                    <div class="validate-input " data-validate = "matritea">
-						<input class="input100" type="hidden" name="matritea" value="<?php echo $row['matritea']; ?>">
-                    </div>
-                  
-					<div class="wrap-input100 validate-input" data-validate = "NAMES">
-						<input class="input100" type="text" name="teachNames" value="<?php echo $row['teachNames']; ?>">
-						<span class="focus-input100" data-placeholder="Nombre"></span>
+                    <div class="validate-input" data-validate = "idDesempenio">
+						<input class="input100" type="hidden" name="idDesempenio" value="<?php echo $row['idDesempenio']; ?>">
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "GENERO">Genero
-                        <select class="form-select" aria-label="Default select example" name="teachSex" value="<?php echo $row['teachSex']; ?>">
-                            <option value="M">M</option>
-                            <option value="F">F</option>  
-                        </select>
+					<div class="wrap-input100 validate-input" data-validate = "desenombre">Nombre desempeño
+						<input class="input100" type="text" name="desenombre" disabled value="<?php echo $row['desenombre']; ?>">
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-						<input class="input100" type="text" name="teachMail" value="<?php echo $row['teachMail']; ?>">
-						<span class="focus-input100" data-placeholder="Correo"></span>
+					<div class="wrap-input100 validate-input" data-validate = "desevalor">valor
+						<input class="input100" type="text" name="desevalor" disabled value="<?php echo $row['desevalor']; ?>">
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "PHONE">
-						<input class="input100" type="phone" name="teachPhone" value="<?php echo $row['teachPhone']; ?>">
-						<span class="focus-input100" data-placeholder="Telefono"></span>
+					<div class="validate-input" data-validate = "Actividad_idActividad">
+						<input class="input100" type="hidden" name="idActividad" value="<?php echo $_GET['idActividad']; ?>">
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "USER">
-						<input class="input100" type="text" name="teachUser" value="<?php echo $row['teachUser']; ?>">
-						<span class="focus-input100" data-placeholder="Usuario"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
-						<input class="input100" type="password" name="teachClue" value="<?php echo $row['teachClue']; ?>">
-						<span class="focus-input100" data-placeholder="Password"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "STATE">ESTADO
-                        <select class="form-select" aria-label="Default select example" name="teachState" value="<?php echo $row['teachState']; ?>">
-                            <option value="Soltero">Soltero(a)</option>
-                            <option value="Casado">Casado(a)</option>
-                            <option value="Divorciado">Divorciado(a)</option>
-                            <option value="Viudo">Viudo(a)</option>
-                        </select>
+					<div class="validate-input" data-validate = "students_matristu">
+						<input class="input100" type="hidden" name="matristu" value="<?php echo $_GET['matristu']; ?>">
 					</div>
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" type="submit2" name="submit2">
-								Guardar
+							<button class="login100-form-btn" type="submit" name="submit">
+								Generar pdf 
 							</button>
 						</div>
 					</div>
@@ -108,7 +81,7 @@
 				<div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <a href="altas.php">
+                        <a href="docentegenpdf.php">
                         <button class="login100-form-btn">
                             Regresar
                         </button></a>
@@ -117,36 +90,33 @@
 			</div>
 		</div>
 	</div>
-  
-    </main>
-<!-- End #main -->
-    <!-- ======= Footer ======= -->
-<br>    
-    <footer id="footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row">
-                <h3>Tecnológico de Estudios Superiores de Chalco</h3>
-                    <div class="col-lg-3 col-md-6 footer-contact">
-                        <br><strong>Dirección: </strong>Carretera Federal México Cuautla s/n, La Candelaria Tlapala, Chalco, Edo. de México <br>
+<!-- ======= Footer ======= -->
+    <br>
+        <footer id="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                    <h3>Tecnológico de Estudios Superiores de Chalco</h3>
+                        <div class="col-lg-3 col-md-6 footer-contact">
+                            <br><strong>Dirección: </strong>Carretera Federal México Cuautla s/n, La Candelaria Tlapala, Chalco, Edo. de México<br>
+                        </div>
+                        <div class="col-lg-3 col-md-6 ">
+                            <br><strong>Telefono: </strong>(0155) 59823503, 59823504, 59820848 y 59821089<br>
+                        </div>
+                        <div class="col-lg-3 col-md-6 ">
+                            <br><strong>Correo: </strong>teschalco@hotmail.com depto.controlescolar@tesch.edu.mx<br>
+                        </div>
+                        <div class="col-lg-3 col-md-6 ">
+                            <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
+                        </div>
+                        <center>
+                            <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
+                        </center>
                     </div>
-                    <div class="col-lg-3 col-md-6 ">
-                        <br><strong>Telefono: </strong>(0155) 59823503, 59823504, 59820848 y 59821089 <br>
-                    </div>
-                    <div class="col-lg-3 col-md-6 ">
-                        <br><strong>Correo: </strong>teschalco@hotmail.com depto.controlescolar@tesch.edu.mx <br>
-                    </div>
-                    <div class="col-lg-3 col-md-6 ">
-                        <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
-                    </div>
-                    <center>
-                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
-                    </center>
                 </div>
             </div>
-        </div>
-    </footer>
-</br>
+        </footer>
+    </br>
     <!-- End Footer -->
 <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

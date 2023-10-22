@@ -91,9 +91,6 @@
                         <a class="nav-link" href="docentepdf.php">Subir Archivos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="docentegrafica.php">Grafica de alumnos por Genero</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="docentegenerapdf.php">Genera PDF</a>
                     </li>
                     <li class="nav-item">
@@ -203,6 +200,7 @@
         </section>
     </main>
     <!-- ======= Footer ======= -->
+<br>    
     <footer id="footer">
         <div class="footer-top">
             <div class="container">
@@ -227,6 +225,7 @@
             </div>
         </div>
     </footer>
+</br>
     <!-- End Footer -->
 <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

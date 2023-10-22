@@ -2,7 +2,7 @@
 
     session_start();
     
-    if(!isset($_SESSION['teachNames'])){
+    if(!isset($_SESSION['admNames'])){
         echo'
             <script>
                 alert("Por favor debes iniciar sesión");
@@ -66,7 +66,7 @@
                 }
             </style>
             <a class="navbar-brand">
-                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['teachNames'];?></a>
+                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['admNames'];?></a>
             </a>
             <a class="navbar-brand">
                 <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">Cerrar Sesión</a></li>
@@ -78,26 +78,20 @@
     <nav class="navbar navbar-expand-lg" aria-label="breadcrumb">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" href="docente.php">Datos Docente</a> 
+                <li class="nav-item">
+                        <a class="nav-link" href="altadmin.php">Administradores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="docentelista.php">Listas de Alumnos</a>
+                        <a class="nav-link" href="altas.php">Docentes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="docenteasis.php">Listas de Asistencia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="docentepdf.php">Subir Archivos</a>
+                        <a class="nav-link" href="altasalumnos.php">Alumnos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="docentegrafica.php">Grafica de alumnos por Genero</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="docentegenerapdf.php">Genera PDF</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="docentehorarioact.php">Horario de Actividades</a>
+                        <a class="nav-link" href="docentegenpdf.php">Genera PDF</a>
                     </li>
                 </ul>
             </div>
@@ -132,11 +126,9 @@
                                         FROM teachers t
                                         INNER JOIN actividad a ON t.matritea = a.teachers_matritea 
                                         INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
-                                        INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
-                                        WHERE t.teachNames = ?";
+                                        INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera";
                                         
                                         $stmt = mysqli_prepare($conexion, $sql);
-                                        mysqli_stmt_bind_param($stmt, "s", $_SESSION['teachNames']);
                                         mysqli_stmt_execute($stmt);
                                         $result = mysqli_stmt_get_result($stmt);
 
@@ -169,6 +161,7 @@
         </section>
     </main>
     <!-- ======= Footer ======= -->
+<br>    
     <footer id="footer">
         <div class="footer-top">
             <div class="container">
@@ -193,6 +186,7 @@
             </div>
         </div>
     </footer>
+</br>
     <!-- End Footer -->
 <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>

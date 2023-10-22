@@ -2,7 +2,7 @@
 
     session_start();
     
-    if(!isset($_SESSION['stunNames'])){
+    if(!isset($_SESSION['admNames'])){
         echo'
             <script>
                 alert("Por favor debes iniciar sesión");
@@ -14,7 +14,6 @@
     }
   
 ?>
-
 <!DOCTYPE php>
 <php lang="es">
 <head>
@@ -54,7 +53,7 @@
     <div>
         <nav class="navbar bg-body-tertiary">
             <div class="container">
-                <h1>Alumno</h1>
+                <h1>Docente</h1>
             <a class="navbar-brand">
                 <img src="images/tescha1.jpg" class="rounded float-end" alt="imagen" height="80" width="280" ></img>
             </a>
@@ -67,7 +66,7 @@
                 }
             </style>
             <a class="navbar-brand">
-                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['stunNames'];?></a>
+                <a class="bold-text"><?php echo'Bienvenido(a) '.$_SESSION['admNames'];?></a>
             </a>
             <a class="navbar-brand">
                 <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary" href="php/cerra_sesion.php">Cerrar Sesión</a></li>
@@ -75,25 +74,31 @@
             </div>
         </nav>
     </div>
-    <div class="text-right">
-        <nav class="navbar navbar-expand-lg" aria-label="breadcrumb">
+    <div>
+    <nav class="navbar navbar-expand-lg" aria-label="breadcrumb">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" href="alum.php">Actividades Complementarias</a>
+                <li class="nav-item">
+                        <a class="nav-link" href="altadmin.php">Administradores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="alumins.php">Inscripciones</a>
+                        <a class="nav-link" href="altas.php">Docentes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="alumhorario.php">Horarios</a>
+                        <a class="nav-link" href="altasalumnos.php">Alumnos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentegrafica.php">Grafica de alumnos por Genero</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docentegenpdf.php">Genera PDF</a>
                     </li>
                 </ul>
             </div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Inscripciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">GENERA PDF</a></li>
             </ol>
-        </nav>
+          </nav>
     </div>
         <!-- End Page Title -->
     <main id="main" class="main">
@@ -102,111 +107,94 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <!-- Table with stripped rows -->
+                    <!-- Table with stripped rows -->
                             <table id="example" class="table table-success border-dark table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Docente</th>
-                                        <th>Nombre de la Actividad</th>
+                                        <th>Nombre</th>
+                                        <th>Actividad Complementaria</th>
+                                        <th>Tipo de Actividad</th>
                                         <th>Periodo</th>
-                                        <th>Horarios</th>
+                                        <th>Matricula del Alumno</th>
+                                        <th>Nombre del Alumno</th>
+                                        <th>Apellido del Alumno</th>
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    include("php/conexion.php");
 
-                                    $matristu = $_SESSION['matristu'];
+                                        include ("php/conexion.php");
 
-                                    $sql = "SELECT t.matritea, t.teachNames, a.idActividad, a.actNombre, p.perPeriodo, c.carreNombre, i.students_matristu 
-                                            FROM teachers t 
-                                            INNER JOIN actividad a ON t.matritea = a.teachers_matritea 
-                                            INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo 
-                                            INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera 
-                                            INNER JOIN inscripciones i ON a.idActividad = i.Actividad_idActividad 
-                                            INNER JOIN students s ON i.students_matristu = s.matristu 
-                                            WHERE i.students_matristu = ?";
+                                        $sql = "SELECT t.matritea, t.teachNames, t.teachUser, t.teachClue, a.idActividad, a.actNombre, p.perPeriodo, c.carreNombre, s.matristu, s.stunNames, s.stuLastNames
+                                        FROM teachers t
+                                        INNER JOIN actividad a ON t.matritea = a.teachers_matritea
+                                        INNER JOIN inscripciones i ON a.idActividad = i.Actividad_idActividad
+                                        INNER JOIN students s ON i.students_matristu = s.matristu
+                                        INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo
+                                        INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera";
 
-                                    $stmt = mysqli_prepare($conexion, $sql);
-                                    mysqli_stmt_bind_param($stmt, "s", $matristu);
-                                    mysqli_stmt_execute($stmt);
-
-                                    $result = mysqli_stmt_get_result($stmt);
-
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        // Obtener todos los horarios de esta actividad
-                                        $idActividad = $row['idActividad'];
-                                        $sqlHorarios = "SELECT horfecha, horhoraini, horhorafin FROM horas WHERE Actividad_idActividad = ?";
-                                        $stmtHorarios = mysqli_prepare($conexion, $sqlHorarios);
-                                        mysqli_stmt_bind_param($stmtHorarios, "i", $idActividad);
-                                        mysqli_stmt_execute($stmtHorarios);
-                                        $resultHorarios = mysqli_stmt_get_result($stmtHorarios);
-                                        ?>
-                                        <tr>
-                                            <td><?php echo htmlentities($row['teachNames']) ?></td>
-                                            <td><?php echo htmlentities($row['actNombre']) ?></td>
-                                            <td><?php echo htmlentities($row['perPeriodo']) ?></td>
-                                            <td>
-                                                <table class="table table-bordered border-primary">
-                                                    <tr>
-                                                        <td>Fecha</td>
-                                                        <td>Hora Inicio</td>
-                                                        <td>Hora Final</td>
-                                                    </tr>
-                                                    <?php
-                                                    while ($rowHorario = mysqli_fetch_array($resultHorarios)) {
-                                                        ?>
-                                                        <tr>
-                                                            <td><?php echo htmlentities($rowHorario['horfecha']) ?></td>
-                                                            <td><?php echo htmlentities($rowHorario['horhoraini']) ?></td>
-                                                            <td><?php echo htmlentities($rowHorario['horhorafin']) ?></td>
-                                                        </tr>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </table>
-                                            </td>
-                                        </tr>
+                                        $stmt = mysqli_prepare($conexion, $sql);
+                                        mysqli_stmt_execute($stmt);
+                                        $result = mysqli_stmt_get_result($stmt);
+                                        while($row = mysqli_fetch_array($result)){
+                                    ?>
+                                    <tr>
+                                        <td><?php echo htmlentities($row['teachNames']) ?></td>
+                                        <td><?php echo htmlentities($row['actNombre']) ?></td>
+                                        <td><?php echo htmlentities($row['carreNombre']) ?></td>
+                                        <td><?php echo htmlentities($row['perPeriodo']) ?></td>
+                                        <td><?php echo htmlentities($row['matristu']) ?></td>
+                                        <td><?php echo htmlentities($row['stunNames']) ?></td>
+                                        <td><?php echo htmlentities($row['stuLastNames']) ?></td>
+                                        <td>
+                                            <a href="desadmin.php?idActividad=<?php echo $row['idActividad']?>&matristu=<?php echo $row['matristu']?>">
+                                            <button class="btn btn-danger" type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                            </svg> Visualizar Desempeño</button></a>
+                                        </td>
+                                    </tr>
                                     <?php
                                         }
-                                    ?>   
+                                    ?>
                                 </tbody>
                             </table>
-                            <!-- End Table with stripped rows -->
+                    <!-- End Table with stripped rows -->
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-<!-- End #main -->
     <!-- ======= Footer ======= -->
-<br>
-    <footer id="footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row">
+    <br>
+        <footer id="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
                     <h3>Tecnológico de Estudios Superiores de Chalco</h3>
-                    <div class="col-lg-3 col-md-6 footer-contact">
-                        <br><strong>Dirección: </strong>Carretera Federal México Cuautla s/n, La Candelaria Tlapala, Chalco, Edo. de México <br>
+                        <div class="col-lg-3 col-md-6 footer-contact">
+                            <br><strong>Dirección: </strong>Carretera Federal México Cuautla s/n, La Candelaria Tlapala, Chalco, Edo. de México <br>
+                        </div>
+                        <div class="col-lg-3 col-md-6 ">
+                            <br><strong>Telefono: </strong>(0155) 59823503, 59823504, 59820848 y 59821089 <br>
+                        </div>
+                        <div class="col-lg-3 col-md-6 ">
+                            <br><strong>Correo: </strong>teschalco@hotmail.com depto.controlescolar@tesch.edu.mx <br>
+                        </div>
+                        <div class="col-lg-3 col-md-6 ">
+                            <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
+                        </div>
+                        <center>
+                            <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
+                        </center>
                     </div>
-                    <div class="col-lg-3 col-md-6 ">
-                        <br><strong>Telefono: </strong>(0155) 59823503, 59823504, 59820848 y 59821089 <br>
-                    </div>
-                    <div class="col-lg-3 col-md-6 ">
-                        <br><strong>Correo: </strong>teschalco@hotmail.com depto.controlescolar@tesch.edu.mx <br>
-                    </div>
-                    <div class="col-lg-3 col-md-6 ">
-                        <img src="images/tescha2.jpg" alt="imagen" height="190" width="230">
-                    </div>
-                    <center>
-                        <p>kevin enrique @ 2023 | TESCHA-Ingeniería Informática</p>
-                    </center>
                 </div>
             </div>
-        </div>
-    </footer>
-</br>    
+        </footer>
+    </br>
     <!-- End Footer -->
 <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -239,7 +227,5 @@
         },
     });
 </script>
-
-
 </body>
 </php>   

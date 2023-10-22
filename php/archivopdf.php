@@ -26,14 +26,14 @@ $pdf->SetTitle('Anexo XV. Constancia de Cumplimiento de Actividades Complementar
 $pdf->AddPage();
 
 // Agregar imagen en la parte superior izquierda
-$imagenIzquierda = '../imagenespdf/imagen1.png'; // Ruta de la imagen izquierda
+$imagenIzquierda = '../php/imagenespdf/imagen1.png'; // Ruta de la imagen izquierda
 $xIzquierda = 10; // Posición X de la imagen izquierda
 $yIzquierda = 2; // Posición Y de la imagen izquierda
 $anchoIzquierda = 60; // Ancho de la imagen izquierda (en milímetros)
 $pdf->Image($imagenIzquierda, $xIzquierda, $yIzquierda, $anchoIzquierda);
 
 // Agregar imagen en la parte superior derecha
-$imagenDerecha = '../imagenespdf/imagen6.png'; // Ruta de la imagen derecha
+$imagenDerecha = '../php/imagenespdf/imagen6.png'; // Ruta de la imagen derecha
 $xDerecha = 127; // Posición X de la imagen derecha
 $yDerecha = 2; // Posición Y de la imagen derecha
 $anchoDerecha = 75; // Ancho de la imagen derecha (en milímetros)
@@ -109,9 +109,9 @@ $pdf->writeHTML($texto_left, true, false, true, false, '');
 $pdf->Ln(10);
 
 // Obtén los datos de la URL
-$idActividad = $_GET['idActividad'];
-$matristu = $_GET['matristu'];
-##$desempenio = $_POST['desempenio'];
+$idActividad = $_POST['idActividad'];
+$matristu = $_POST['matristu'];
+$idDesempenio = $_POST['idDesempenio'];
 
 //Conexion a la base de datos y al proyecto
 $conexion = mysqli_connect("localhost", "root", "", "proyecto");
@@ -125,13 +125,12 @@ INNER JOIN inscripciones i ON a.idActividad = i.Actividad_idActividad
 INNER JOIN students s ON i.students_matristu = s.matristu 
 INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo
 INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
-WHERE t.teachNames = ? AND a.idActividad = ? AND s.matristu = ?";
+WHERE d.idDesempenio = ? AND a.idActividad = ? AND s.matristu = ?";
 
 $stmt = mysqli_prepare($conexion, $sql);
-mysqli_stmt_bind_param($stmt, "sss", $_SESSION['teachNames'], $idActividad, $matristu);
+mysqli_stmt_bind_param($stmt, "sss",$idDesempenio, $idActividad, $matristu);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
-
 
 //agrega los datos que tienen tilde en la base de datos en mayusculas
 if ($result->num_rows > 0) {
@@ -211,7 +210,8 @@ $pdf->Ln(10);
 
 //texto del documento donde se modificara la hora y fecha del documento
 $texto_izquierda = '<div style="text-align:justify; text-indent: 0px; ">
-Se extiende la presente en la <b>Candelaria Tlapala Chalco, México</b> a los   dias de de 2023.
+Se extiende la presente en la <b>Candelaria Tlapala Chalco, México</b> a los 03
+dias de Enero de 2023.
 </div>';
 
 $pdf->writeHTML($texto_izquierda, true, false, false, false, '');
@@ -224,7 +224,7 @@ $pdf->writeHTML($texto_izquierda, true, false, false, false, '');
 #$pdf->writeHTML($texto_izquierda, true, false, false, false, '');
 
 // Agregar un salto de línea
-$pdf->Ln(16);
+$pdf->Ln(14);
 
 //texto del documento para el año
 $texto_izquierda = '<div style="text-align:center; text-indent: 0px; ">
@@ -235,7 +235,7 @@ $pdf->writeHTML($texto_izquierda, true, false, false, false, '');
 
 
 // Agregar un salto de línea
-$pdf->Ln(40);
+$pdf->Ln(38);
 
 // Cuadro de texto para la firma del jefe de división y docente
 $html = '<table cellpadding="5" style="width:100%;">
@@ -259,7 +259,7 @@ $texto_subrayado = '<div style="text-align:left; font-size: 10px">
 $pdf->writeHTML($texto_subrayado, true, false, true, false, '');
 
 // Luego, define la ubicación y dimensiones de la imagen
-$imagenIzquierda = '../imagenespdf/imagen3.png'; // Ruta de la imagen
+$imagenIzquierda = '../php/imagenespdf/imagen3.png'; // Ruta de la imagen
 $anchoImagen = 25; // Ancho de la imagen en milímetros
 $altoImagen = 20; // Alto de la imagen en milímetros
 $posXImagen = 0; // Posición X de la imagen en milímetros (ajusta según tus necesidades)
@@ -276,7 +276,7 @@ $pdf->SetFont('helvetica', 'I', 11);
 $pdf->Cell(0, 10, 'Página ' . $pdf->getAliasNumPage() . ' de ' . $pdf->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
 
 // Agregar un salto de línea
-$pdf->Ln(10);
+$pdf->Ln(8);
 
 // Texto a la izquierda de la leyenda de toda hoja
 $texto_izquierda = '<div style="text-align:left; font-size: 11px;">
@@ -287,7 +287,7 @@ $texto_izquierda = '<div style="text-align:left; font-size: 11px;">
 $pdf->writeHTML($texto_izquierda, true, false, true, false, '');
 
 // Agregar un salto de línea
-$pdf->Ln(3.2);
+$pdf->Ln(3);
 
 // Agregar texto en la parte inferior derecha
 $texto_subrayado = '<div style="text-align:right; font-size: 8px;">
@@ -329,7 +329,7 @@ $pdf->writeHTML($texto_estilo, true, false, true, false, '');
 } else {
         echo '<script>
             alert("No se encontraron resultados ingresa primero el desempeño para el alumno antes de continuar");
-            window.location = "../../docentegenerapdf.php";
+            window.location = "../docentegenpdf.php";
             </script>
         ';
 }
