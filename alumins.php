@@ -116,7 +116,7 @@
                                 <tbody>
                                     <?php
                                         include("php/conexion.php");
-                                        $sql = "SELECT t.matritea, t.teachNames, a.idActividad, a.actNombre, a.actlimit, p.perPeriodo 
+                                        $sql = "SELECT t.matritea, t.teachNames, a.idActividad, a.actNombre, a.actLimit, p.perPeriodo 
                                                 FROM teachers t 
                                                 INNER JOIN actividad a ON t.matritea = a.teachers_matritea  
                                                 INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo";
@@ -133,7 +133,7 @@
                                         <td><?php echo htmlentities($row['teachNames']) ?></td>
                                         <td><?php echo htmlentities($row['actNombre']) ?></td>
                                         <td><?php echo htmlentities($row['perPeriodo']) ?></td>
-                                        <td><?php echo htmlentities($row['actlimit']) ?></td>
+                                        <td><?php echo htmlentities($row['actLimit']) ?></td>
                                         <td>
                                             <form action="php/alumno/inscr.php" method="POST">
                                                 <input type="hidden" name="idInscripciones">
