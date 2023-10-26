@@ -91,7 +91,7 @@
                         <a class="nav-link" href="docentepdf.php">Subir Archivos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="docentegenerapdf.php">Genera PDF</a>
+                        <a class="nav-link" href="docentegenerapdf.php">Desempeño</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="docentehorarioact.php">Horario de Actividades</a>
