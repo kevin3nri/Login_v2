@@ -50,7 +50,7 @@
 
                     <div class="wrap-input100 validate-input" data-validate = "Limite">
 						<input class="input100" type="text" name="actLimit" >
-						<span class="focus-input100" data-placeholder="Limite"></span>
+						<span class="focus-input100" data-placeholder="Limite de Alumnos"></span>
 					</div>
 
                     <div class="wrap-input100 validate-input">

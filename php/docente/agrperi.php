@@ -13,14 +13,14 @@
     if($dato){
         echo '
         <script>
-            alert("Usuario Almacenado Exitosamente");
+            alert("Periodo Almacenado Exitosamente");
             window.location = "../../docente.php";
         </script>
     ';
     }else{
         echo '
         <script>
-            alert("Intentalo de nuevo, Usuario no almacenado");
+            alert("Intentalo de nuevo, Periodo no almacenado");
             window.location = "../../docente.php";
         </script>
     ';
