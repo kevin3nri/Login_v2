@@ -123,14 +123,13 @@
                                     <?php
                                         include ("php/conexion.php");
 
-                                        $sql = "SELECT s.matristu, s.stunNames, t.teachNames, idActividad, a.actNombre, p.perPeriodo, c.carreNombre, u.subiNombre 
+                                        $sql = "SELECT s.matristu, s.stunNames, t.teachNames, a.idActividad, a.actNombre, p.perPeriodo, c.carreNombre, u.subiNombre 
                                         FROM students s 
-                                        INNER JOIN inscripciones i ON s.matristu = i.students_matristu 
-                                        INNER JOIN actividad a ON a.idActividad = i.Actividad_idActividad 
-                                        INNER JOIN subir_doc u ON u.Actividad_idActividad = a.idActividad 
+                                        INNER JOIN subir_doc u ON s.matristu = u.students_matristu 
+                                        INNER JOIN actividad a ON u.Actividad_idActividad = a.idActividad 
                                         INNER JOIN teachers t ON a.teachers_matritea = t.matritea 
+                                        INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera 
                                         INNER JOIN periodo p ON a.Periodo_idPeriodo = p.idPeriodo
-                                        INNER JOIN carrera c ON a.carrera_idcarrera = c.idcarrera
                                         WHERE s.stunNames = ?";
 
                                         $stmt = mysqli_prepare($conexion, $sql);
